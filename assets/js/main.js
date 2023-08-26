@@ -19,6 +19,31 @@ function convertPokemonToLi(pokemon) {
                 <img src="${pokemon.photo}"
                      alt="${pokemon.name}">
             </div>
+
+            <div class="pokemon-info">
+
+                    <nav class="pokemon-info-selector">
+                        <button onclick="showCard(1, this.parentElement.parentElement)">About</button>
+                        <button onclick="showCard(2, this.parentElement.parentElement)">Base Stats</button>
+                    </nav>
+
+                    <div class="pokemon-info-section" id="card1">
+                        <p>Height: <span>${pokemon.height}</span></p>
+                        <p>Weight: <span>${pokemon.weight}</span></p>
+                        <p>Abilities: <span>${pokemon.abilities}</span></p>
+                    </div>
+
+                    <div class="pokemon-info-section" id="card2">
+                        <p>HP: <span>${pokemon.hp}</span></p>
+                        <p>Attack: <span>${pokemon.attack}</span></p>
+                        <p>Defense: <span>${pokemon.defense}</span></p>
+                        <p>Sp. Atk: <span>${pokemon.spAtack}</span></p>
+                        <p>Sp. Def: <span>${pokemon.spDefense}</span></p>
+                        <p>Speed: <span>${pokemon.speed}</span></p>
+                    </div>
+
+                </div>
+            
         </li>
     `
 }
@@ -45,3 +70,28 @@ loadMoreButton.addEventListener('click', () => {
         loadPokemonItens(offset, limit)
     }
 })
+
+function showCard(cardNumber, listItem) {
+    const cardElements = listItem.querySelectorAll('.pokemon-info-section');
+
+    cardElements.forEach((card, index) => {
+        if (index === cardNumber - 1) {
+            if (card.style.display === 'none' || card.style.display === '') {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        } else {
+            card.style.display = 'none';
+        }
+    });
+
+    const button = listItem.querySelector(`button:nth-child(${cardNumber})`);
+    if (button) {
+        if (button.textContent === 'Hide') {
+            button.textContent = 'Show';
+        } else {
+            button.textContent = 'Hide';
+        }
+    }
+}
